@@ -44,6 +44,12 @@ jobs:
         working-directory: ojs
         run: composer --working-dir=lib/pkp install --no-interaction --no-progress --prefer-dist
 
+      - name: Provide a configuration file
+        # The PKP bootstrap reads config.inc.php before anything else, even for
+        # tests that never touch the database.
+        working-directory: ojs
+        run: cp config.TEMPLATE.inc.php config.inc.php
+
       - name: Lint the plugin
         working-directory: ojs
         run: find plugins/generic/recommendByAuthor -name '*.php' -print0 | xargs -0 -n1 php -l
