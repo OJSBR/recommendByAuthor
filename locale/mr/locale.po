@@ -1,0 +1,95 @@
+# Murari P Tapaswi <tapaswimurari@gmail.com>, 2025.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-02-11 19:44+0000\n"
+"Last-Translator: Murari P Tapaswi <tapaswimurari@gmail.com>\n"
+"Language-Team: Marathi <http://translate.pkp.sfu.ca/projects/ojs/"
+"generic-recommendByAuthor/mr/>\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18.2\n"
+
+msgid "plugins.generic.recommendByAuthor.description"
+msgstr ""
+"हे प्लगइन लेखाच्या सारांश पृष्ठावर या लेखकाच्या लेखांची यादीही समाविष्ट करते."
+
+msgid "plugins.generic.recommendByAuthor.displayName"
+msgstr "लेखकाच्या लेखांची शिफारस करा"
+
+msgid "plugins.generic.recommendByAuthor.heading"
+msgstr "या लेखकांचे सर्वाधिक वाचलेले लेख"
+
+msgid "plugins.generic.recommendByAuthor.task.name"
+msgstr "Refresh author recommendations"
+
+msgid "plugins.generic.recommendByAuthor.task.result"
+msgstr "Refreshed {$refreshed} submission(s); {$queued} new one(s) queued."
+
+msgid "plugins.generic.recommendByAuthor.settings.description"
+msgstr "Recommendations are computed in the background and read from a cache, so that the article page never computes them while a reader waits."
+
+msgid "plugins.generic.recommendByAuthor.settings.status.title"
+msgstr "Coverage"
+
+msgid "plugins.generic.recommendByAuthor.settings.status.body"
+msgstr "{$computed} of {$total} enrolled submissions have recommendations; {$pending} still queued."
+
+msgid "plugins.generic.recommendByAuthor.settings.display.title"
+msgstr "Display"
+
+msgid "plugins.generic.recommendByAuthor.settings.recommendationCount"
+msgstr "Recommendations per page"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxRecommendations"
+msgstr "Maximum recommendations stored per article"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy"
+msgstr "Order recommendations by"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.metric"
+msgstr "Most read (views and downloads)"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.date"
+msgstr "Most recently published"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid"
+msgstr "Also match authors by ORCID"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid.hint"
+msgstr "Names are always matched. ORCID matching only adds articles that the name alone would miss, such as those of an author who has since changed their surname."
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.title"
+msgstr "Refresh"
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.hint"
+msgstr "Each run of the scheduled task refreshes a slice of the journal, the least recently computed first, so that recommendations never all expire at the same moment."
+
+msgid "plugins.generic.recommendByAuthor.settings.batchSize"
+msgstr "Submissions refreshed per run"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxAgeDays"
+msgstr "Refresh recommendations older than (days)"
+
+msgid "plugins.generic.recommendByAuthor.settings.queueLimit"
+msgstr "Enrol at most this many submissions (0 = no limit)"
+
+msgid "plugins.generic.recommendByAuthor.settings.rankingTtlHours"
+msgstr "Reuse the reading figures for (hours)"
+
+msgid "plugins.generic.recommendByAuthor.settings.htmlCacheHours"
+msgstr "Keep the rendered section for (hours)"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand"
+msgstr "Compute missing recommendations while the reader waits"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand.hint"
+msgstr "Off by default. While off, an article whose recommendations have not been computed yet simply shows no section, and the scheduled task fills it in. Turning it on is only advisable on small journals."
+
+msgid "plugins.generic.recommendByAuthor.settings.numberRequired"
+msgstr "Please enter a whole number."
+
+msgid "plugins.generic.recommendByAuthor.task.indexing"
+msgstr "Indexed {$indexed} submission(s); {$remaining} still to index before recommendations can be computed."

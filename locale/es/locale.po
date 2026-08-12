@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-19T11:05:20+00:00\n"
+"PO-Revision-Date: 2019-11-19T11:05:20+00:00\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "plugins.generic.recommendByAuthor.displayName"
+msgstr "Artículos recomendados del autor/a"
+
+msgid "plugins.generic.recommendByAuthor.description"
+msgstr ""
+"Este módulo inserta una lista de artículos del mismo autor/a en la página "
+"del resumen del artículo."
+
+msgid "plugins.generic.recommendByAuthor.heading"
+msgstr "Artículos más leídos del mismo autor/a"
+
+msgid "plugins.generic.recommendByAuthor.task.name"
+msgstr "Actualizar recomendaciones por autor/a"
+
+msgid "plugins.generic.recommendByAuthor.task.result"
+msgstr "{$refreshed} envío(s) actualizado(s); {$queued} nuevo(s) en la cola."
+
+msgid "plugins.generic.recommendByAuthor.settings.description"
+msgstr "Las recomendaciones se calculan en segundo plano y se leen de una caché, de modo que la página del artículo nunca las calcula mientras el lector espera."
+
+msgid "plugins.generic.recommendByAuthor.settings.status.title"
+msgstr "Cobertura"
+
+msgid "plugins.generic.recommendByAuthor.settings.status.body"
+msgstr "{$computed} de {$total} envíos inscritos tienen recomendaciones; {$pending} siguen en la cola."
+
+msgid "plugins.generic.recommendByAuthor.settings.display.title"
+msgstr "Visualización"
+
+msgid "plugins.generic.recommendByAuthor.settings.recommendationCount"
+msgstr "Recomendaciones por página"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxRecommendations"
+msgstr "Máximo de recomendaciones almacenadas por artículo"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy"
+msgstr "Ordenar las recomendaciones por"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.metric"
+msgstr "Más leídos (visualizaciones y descargas)"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.date"
+msgstr "Publicados más recientemente"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid"
+msgstr "Identificar también a los autores/as por ORCID"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid.hint"
+msgstr "Los nombres siempre se comparan. El ORCID solo añade artículos que el nombre por sí solo no encontraría, como los de un autor/a que ha cambiado de apellido."
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.title"
+msgstr "Actualización"
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.hint"
+msgstr "Cada ejecución de la tarea programada actualiza una parte de la revista, empezando por las calculadas hace más tiempo, de modo que las recomendaciones nunca caducan todas a la vez."
+
+msgid "plugins.generic.recommendByAuthor.settings.batchSize"
+msgstr "Envíos actualizados por ejecución"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxAgeDays"
+msgstr "Actualizar las recomendaciones con más de (días)"
+
+msgid "plugins.generic.recommendByAuthor.settings.queueLimit"
+msgstr "Inscribir como máximo esta cantidad de envíos (0 = sin límite)"
+
+msgid "plugins.generic.recommendByAuthor.settings.rankingTtlHours"
+msgstr "Reutilizar las cifras de lectura durante (horas)"
+
+msgid "plugins.generic.recommendByAuthor.settings.htmlCacheHours"
+msgstr "Conservar la sección generada durante (horas)"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand"
+msgstr "Calcular las recomendaciones que falten mientras el lector espera"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand.hint"
+msgstr "Desactivado por defecto. Mientras esté desactivado, un artículo cuyas recomendaciones aún no se han calculado simplemente no muestra la sección, y la tarea programada la rellena. Solo es aconsejable activarlo en revistas pequeñas."
+
+msgid "plugins.generic.recommendByAuthor.settings.numberRequired"
+msgstr "Introduzca un número entero."
+
+msgid "plugins.generic.recommendByAuthor.task.indexing"
+msgstr "{$indexed} envío(s) indexado(s); faltan {$remaining} por indexar antes de poder calcular las recomendaciones."
