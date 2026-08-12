@@ -1,10 +1,10 @@
 # Recommend Articles by Author — OJS plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-2.0.0.0-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-2.0.0.1-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.0/recommendByAuthor-2.0.0.0.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.1/recommendByAuthor-2.0.0.1.tar.gz) — or browse all [Releases](../../releases).
 
 The **"Most read articles by the same author(s)"** section on the article page — the same
 feature journals already know, rebuilt so that it is **read from a cache instead of computed
@@ -20,7 +20,7 @@ while a reader waits**.
 
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 2.0.0.0 |
+| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 2.0.0.1 |
 
 ## The problem
 
@@ -195,7 +195,7 @@ calculada enquanto o leitor espera**.
 
 | Versão do OJS | Branch | Versão do plugin |
 |---------------|--------|------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 2.0.0.0 |
+| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 2.0.0.1 |
 
 ### O que faz
 
