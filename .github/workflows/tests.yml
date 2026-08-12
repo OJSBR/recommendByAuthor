@@ -59,7 +59,7 @@ jobs:
         # up the tests of the plugins shipped with OJS, several of which need a
         # database this job does not have.
         working-directory: ojs/lib/pkp/tests
-        run: ../lib/vendor/bin/phpunit -c phpunit.xml --no-coverage ../../../plugins/generic/recommendByAuthor/tests
+        run: ../lib/vendor/bin/phpunit -c phpunit.xml --no-coverage "${{ github.workspace }}/ojs/plugins/generic/recommendByAuthor/tests"
 
 # The regression and Cypress suites need a populated installation with a
 # journal, which this workflow does not build; see tests/CASES.md for how to run
