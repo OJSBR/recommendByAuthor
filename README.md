@@ -136,15 +136,29 @@ No OJS table is modified. Uninstalling is `DROP`.
 
 ## Tests
 
-Verified against a production journal of 4,823 published articles and 25,877 authors:
+Three suites, all of them run against OJS 3.5.0.3 before this release
+(details and the list of cases in [tests/CASES.md](tests/CASES.md)):
 
-- **correctness** — 60 submissions compared item by item against the original plugin: the new
-  results are a superset, with no legitimate result lost. The extra matches were audited
-  individually and every one is the same person under a different spelling.
-- **performance** — the figures in the tables above, measured on that database.
-- **rendering** — section, paging, settings form and translations checked in the browser on a
-  3.5 install, with articles built to exercise name-matching, ORCID-matching and the
-  double-space case.
+| Suite | What it covers | Result |
+|---|---|---|
+| [`tests/regression.php`](tests/regression.php) | author keys, the index, the store, and publishing through to the reader — against a real database | **62 cases, 62 passed** |
+| [`tests/AuthorKeyTest.php`](tests/AuthorKeyTest.php) | the identity rules on their own (PHPUnit, no database) | **passed** |
+| [`cypress/tests/functional/`](cypress/tests/functional) | enabling, the settings screen and the article page, in a browser | **7 tests, 7 passed** |
+
+```bash
+php plugins/generic/recommendByAuthor/tests/regression.php
+cd lib/pkp/tests && ../lib/vendor/bin/phpunit -c phpunit.xml --testsuite ApplicationPlugins
+npx cypress run --spec 'cypress/tests/**/RecommendByAuthor.cy.js'
+```
+
+The regression suite creates its own submissions and deletes them again; run it on a test
+installation. The Cypress spec defaults to the PKP test data but runs against any journal
+through `cypress.env.json` — it solves the Altcha proof of work where `captcha_on_login` is on,
+and works whatever language the interface is in.
+
+Beyond the suites, the correctness of the results was checked against the original plugin on a
+production journal: **60 submissions compared item by item**, where the new results are a
+superset with no legitimate result lost, and every extra match audited by hand.
 
 ## Credits & authorship
 
@@ -251,10 +265,21 @@ Nenhuma tabela do OJS é alterada. Desinstalar é `DROP`.
 
 ### Testes
 
-Verificado contra a base de uma revista de produção com 4.823 artigos publicados: 60 artigos
-comparados item a item com o plugin original (resultado é superconjunto, sem perda), os números
-de desempenho das tabelas acima, e a renderização conferida no navegador numa instalação 3.5 —
-seção, paginação, formulário de configurações e traduções.
+Três suítes, todas executadas contra o OJS 3.5.0.3 antes desta versão (a lista de casos está em
+[tests/CASES.md](tests/CASES.md)): a de regressão (`tests/regression.php`), que cobre as chaves
+de autor, o índice, o armazenamento e o caminho da publicação até o leitor contra um banco real
+— **62 casos, 62 passaram**; a unitária em PHPUnit (`tests/AuthorKeyTest.php`), que cobre as
+regras de identidade sozinhas — **passou**; e a funcional em Cypress, que cobre habilitar o
+plugin, a tela de configurações e a página do artigo no navegador — **7 testes, 7 passaram**.
+
+A suíte de regressão cria e apaga as próprias submissões: rode em instalação de teste. O Cypress
+usa por padrão a base de testes da PKP, mas roda contra qualquer revista via `cypress.env.json`
+— ele resolve o desafio do Altcha onde `captcha_on_login` está ligado e funciona em qualquer
+idioma de interface.
+
+Além das suítes, a correção dos resultados foi conferida contra o plugin original numa revista
+de produção: **60 artigos comparados item a item**, com o resultado novo sendo superconjunto, sem
+perder nada legítimo, e cada casamento extra auditado à mão.
 
 ### Créditos e autoria
 

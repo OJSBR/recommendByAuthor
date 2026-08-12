@@ -205,7 +205,14 @@ class RecommendByAuthorPlugin extends GenericPlugin implements HasTaskScheduler
     public function getActions($request, $verb): array
     {
         $actions = parent::getActions($request, $verb);
-        if (!$this->getEnabled()) {
+
+        // A site administrator reaches this grid with no journal in the
+        // request, and the plugin is enabled per journal; asking getEnabled()
+        // there answers "no" and the Settings link disappears for exactly the
+        // person most likely to want it.
+        $contextId = $this->getCurrentContextId();
+        $enabled = $contextId ? $this->getEnabled($contextId) : (bool) $this->enabledContextIds();
+        if (!$enabled) {
             return $actions;
         }
 

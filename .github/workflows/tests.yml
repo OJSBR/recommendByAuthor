@@ -1,0 +1,57 @@
+name: Tests
+
+# Runs the unit tests of this plugin inside a real OJS checkout, the same way
+# the PKP test suite runs them (the ApplicationPlugins suite picks up
+# plugins/*/*/tests automatically).
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3']
+    steps:
+      - name: Check out OJS
+        uses: actions/checkout@v4
+        with:
+          repository: pkp/ojs
+          ref: stable-3_5_0
+          submodules: recursive
+          path: ojs
+
+      - name: Check out the plugin into place
+        uses: actions/checkout@v4
+        with:
+          path: ojs/plugins/generic/recommendByAuthor
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: intl, mbstring, xml, zip, gd, pdo_mysql
+          coverage: none
+
+      - name: Install dependencies
+        working-directory: ojs
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          composer --working-dir=lib/pkp install --no-interaction --no-progress --prefer-dist
+
+      - name: Lint the plugin
+        working-directory: ojs
+        run: find plugins/generic/recommendByAuthor -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Unit tests
+        working-directory: ojs/lib/pkp/tests
+        run: ../lib/vendor/bin/phpunit -c phpunit.xml --testsuite ApplicationPlugins --no-coverage
+
+# The regression and Cypress suites need a populated installation with a
+# journal, which this workflow does not build; see tests/CASES.md for how to run
+# them against one.
