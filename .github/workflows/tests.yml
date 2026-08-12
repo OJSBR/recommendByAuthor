@@ -39,10 +39,10 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        # OJS keeps no composer.json at its root; the dependencies, and phpunit
+        # with them, live in lib/pkp.
         working-directory: ojs
-        run: |
-          composer install --no-interaction --no-progress --prefer-dist
-          composer --working-dir=lib/pkp install --no-interaction --no-progress --prefer-dist
+        run: composer --working-dir=lib/pkp install --no-interaction --no-progress --prefer-dist
 
       - name: Lint the plugin
         working-directory: ojs
