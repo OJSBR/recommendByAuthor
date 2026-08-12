@@ -235,7 +235,7 @@ class RecommendationStore
      *
      * The original plugin asks the statistics service for the same numbers on
      * every page view, filtered by the handful of submissions it just found --
-     * about two seconds per view on a journal the size of RECIMA21. Asked once
+     * about two seconds per view on a journal of a few thousand articles. Asked once
      * for the whole journal and kept for a few hours, it costs a fraction of
      * that per day: the ranking moves slowly, and an article does not change
      * places because of the last hour of downloads.

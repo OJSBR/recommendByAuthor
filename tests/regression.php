@@ -283,8 +283,8 @@ $nameCases = [
     ['A01', 'João', 'Silva', 'n:joao|silva', 'accents are folded'],
     ['A02', 'JOÃO', 'SILVA', 'n:joao|silva', 'case is folded'],
     ['A03', 'João  ', '  Silva', 'n:joao|silva', 'stray spaces are trimmed'],
-    ['A04', 'Leandro Barbosa', ' Teixeira', 'n:leandro barbosa|teixeira', 'the real double-space case'],
-    ['A05', 'Leandro  Barbosa', 'Teixeira', 'n:leandro barbosa|teixeira', 'inner double space collapses'],
+    ['A04', 'Ana Carolina', ' Menezes', 'n:ana carolina|menezes', 'the real double-space case'],
+    ['A05', 'Ana  Carolina', 'Menezes', 'n:ana carolina|menezes', 'inner double space collapses'],
     ['A06', 'J. P.', 'Silva', 'n:j p|silva', 'initials lose their punctuation'],
     ['A07', 'Ana', '', 'n:ana|', 'given name alone is still a key'],
     ['A08', '', 'Silva', 'n:|silva', 'family name alone is still a key'],
@@ -304,7 +304,7 @@ testCase('A11', 'a nameless author has no key (the original matched them all)', 
 });
 
 testCase('A12', 'two spellings of the same person share one key', function () {
-    assertEquals(AuthorKey::fromName('Leandro Barbosa ', ' Teixeira'), AuthorKey::fromName('Leandro Barbosa', 'Teixeira'));
+    assertEquals(AuthorKey::fromName('Ana Carolina ', ' Menezes'), AuthorKey::fromName('Ana Carolina', 'Menezes'));
 });
 
 testCase('A13', 'different people keep different keys', function () {

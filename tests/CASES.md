@@ -54,7 +54,7 @@ The rules that decide whether two records are the same person. These are the who
 plugin's correctness: too strict and it finds nothing, too loose and it invents co-authorship.
 
 - **A01–A10** — accents, case, stray and double spaces, initials punctuation, tabs. A04 and A05
-  are the real RECIMA21 data: `"Leandro Barbosa␣␣Teixeira"`, which the original plugin misses
+  are real data from a production journal: `"Ana Carolina␣␣Menezes"`, which the original plugin misses
   because it compares strings exactly.
 - **A11** — *a nameless author has no key.* This is the bug the plugin refuses to reproduce: the
   original calls `filterByName('', '')`, which matches every other nameless author in the

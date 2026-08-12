@@ -38,8 +38,8 @@ class AuthorKeyTest extends PKPTestCase
         return [
             'accents' => [['João', 'Silva'], ['Joao', 'Silva']],
             'case' => [['JOÃO', 'SILVA'], ['joão', 'silva']],
-            'trailing space' => [['Leandro Barbosa ', ' Teixeira'], ['Leandro Barbosa', 'Teixeira']],
-            'double space' => [['Leandro  Barbosa', 'Teixeira'], ['Leandro Barbosa', 'Teixeira']],
+            'trailing space' => [['Ana Carolina ', ' Menezes'], ['Ana Carolina', 'Menezes']],
+            'double space' => [['Ana  Carolina', 'Menezes'], ['Ana Carolina', 'Menezes']],
             'initials punctuation' => [['J. P.', 'Silva'], ['J P', 'Silva']],
             'tabs' => [["Ana\tMaria", 'Sá'], ['Ana Maria', 'Sa']],
             'cedilla' => [['Conceição', 'Assunção'], ['Conceicao', 'Assuncao']],

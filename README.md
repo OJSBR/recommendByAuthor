@@ -55,7 +55,7 @@ submissions of that journal, the new results are a **superset**: nothing the ori
 was lost, and these were added —
 
 - **names with stray or double spaces.** The original compares strings exactly, so
-  `"Leandro Barbosa  Teixeira"` and `"Leandro Barbosa Teixeira"` are two different people.
+  `"Ana Carolina  Menezes"` and `"Ana Carolina Menezes"` are two different people.
   Real, common data.
 - **ORCID.** An author who changed surname keeps their identifier. The original plugin's own
   source comments asked for exactly this ("until OJS allows users to consistently normalize
