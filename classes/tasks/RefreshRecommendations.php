@@ -31,8 +31,23 @@ use PKP\scheduledTask\ScheduledTaskHelper;
 
 class RefreshRecommendations extends ScheduledTask
 {
-    /** Stop taking on submissions after this long, so a run never outlives the cron slot. */
-    private const TIME_BUDGET_SECONDS = 120;
+    /**
+     * How long a run may take on the command line, where it has a cron slot to
+     * itself.
+     */
+    private const TIME_BUDGET_CLI = 120;
+
+    /**
+     * How long it may take when there is no cron at all.
+     *
+     * With [schedule] task_runner on -- which is the default, and what replaced
+     * the old acron plugin -- scheduled tasks run in a shutdown function at the
+     * end of a web request. The reader already has the page by then, but the
+     * PHP-FPM worker is still busy, and workers are few. Refreshing a smaller
+     * slice more often is the right trade there: the queue rolls forward either
+     * way, just in smaller steps.
+     */
+    private const TIME_BUDGET_WEB = 10;
 
     /** Submissions indexed per run. Indexing is cheap; this is a safety rail, not a pace. */
     private const INDEX_BATCH = 5000;
@@ -77,7 +92,7 @@ class RefreshRecommendations extends ScheduledTask
 
         $due = $store->due($contextIds, (int) $plugin->getPluginSetting('batchSize'), (int) $plugin->getPluginSetting('maxAgeDays'));
 
-        $deadline = time() + self::TIME_BUDGET_SECONDS;
+        $deadline = time() + (PHP_SAPI === 'cli' ? self::TIME_BUDGET_CLI : self::TIME_BUDGET_WEB);
         $refreshed = 0;
         foreach ($due as $contextId => $submissionIds) {
             $ranking = $store->ranking(
