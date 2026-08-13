@@ -76,9 +76,8 @@ articles was being given about **3,285 irrelevant recommendations** at a cost of
    `plugins/generic/recommendByAuthor` and register it.
    **Do not rename the folder** — OJS derives the plugin's namespace from the directory name.
 2. Enable it in **Settings → Website → Plugins**. Enabling creates its three tables.
-3. Recommended on a large journal: build the cache once, deliberately, before the readers
-   arrive — see below. Otherwise the scheduled task fills it in over a few hours, and articles
-   simply show no section until their turn comes.
+3. **The section will not appear straight away** — see *After enabling* below for how long
+   the filling takes and how to do it in one pass instead of waiting.
 
 ```bash
 php plugins/generic/recommendByAuthor/tools/buildRecommendations.php --pause=100
@@ -86,6 +85,44 @@ php plugins/generic/recommendByAuthor/tools/buildRecommendations.php --pause=100
 
 Run it as the account that owns the files, never as root. `--help` lists the options
 (`--context`, `--limit`, `--batch`, `--pause`, `--stale-only`, `--status`).
+
+### After enabling: the section does not appear yet
+
+**This is expected, and it is the plugin working as designed.** Enabling creates the tables but
+leaves them empty; nothing is computed while a reader waits. Until an article has been
+processed, it simply shows no section.
+
+How long the filling takes depends on how the site runs its scheduled tasks:
+
+| | pace | a journal of 1,000 articles | of 5,000 |
+|---|---|---|---|
+| **With cron** (recommended) | 250 articles every 15 min | about **1 hour** | about **5 hours** |
+| **Without cron** (`[schedule] task_runner`, the default) | up to 250 articles a minute, but only while people are visiting the site | minutes to hours, depending on traffic | idem |
+| **By hand, once** | the whole journal in one pass | **seconds** | **12 s** on the journal this was measured on |
+
+If you would rather not wait, build it once and let the task only keep it current:
+
+```bash
+php plugins/generic/recommendByAuthor/tools/buildRecommendations.php --pause=100
+```
+
+You can watch it fill up in **Settings → Website → Plugins → Recommend Articles by Author →
+Settings**, which reports how many submissions already have recommendations, or from the command
+line with `tools/buildRecommendations.php --status`.
+
+### Tables it creates
+
+Three, all of them new — **no OJS table is modified**:
+
+| table | what it holds |
+|---|---|
+| `recommend_author_index` | one row per (author identity, published submission). The identity is a normalised name or an ORCID; this is what turns "which articles does this author have?" into an index lookup |
+| `recommend_author_cache` | the ordered list of recommended submissions for each article |
+| `recommend_author_state` | what has been indexed and computed, and when |
+
+On a journal with 4,823 published articles and 25,877 authors they take about **17 MB** together.
+Every row is tied to its submission with `ON DELETE CASCADE`, so deleting a submission cleans up
+after itself, and uninstalling is a matter of dropping the three tables.
 
 ## Configuration
 
@@ -225,13 +262,52 @@ banco — naquela revista são **222 autores sem nome em 97 artigos**, cada um r
    Plugins → Enviar novo plugin**, ou copie a pasta para `plugins/generic/recommendByAuthor`.
    **Não renomeie a pasta** — o OJS deriva o namespace do nome do diretório.
 2. Habilite em **Configurações → Website → Plugins**. Ao habilitar, as três tabelas são criadas.
-3. Em revista grande, monte o cache de uma vez, fora do horário de pico:
+3. **A seção não aparece de imediato** — veja *Depois de habilitar*, abaixo. Para preencher de
+   uma vez, em vez de esperar:
 
 ```bash
 php plugins/generic/recommendByAuthor/tools/buildRecommendations.php --pause=100
 ```
 
 Rode como o dono dos arquivos, nunca como root. `--help` lista as opções.
+
+### Depois de habilitar: a seção ainda não aparece
+
+**Isso é esperado, e é o plugin funcionando como projetado.** Habilitar cria as tabelas, mas elas
+nascem vazias; nada é calculado com o leitor esperando. Enquanto um artigo não tiver sido
+processado, ele simplesmente não exibe a seção.
+
+Quanto tempo leva para preencher depende de como o site executa as tarefas agendadas:
+
+| | ritmo | revista de 1.000 artigos | de 5.000 |
+|---|---|---|---|
+| **Com cron** (recomendado) | 250 artigos a cada 15 min | cerca de **1 hora** | cerca de **5 horas** |
+| **Sem cron** (`[schedule] task_runner`, o padrão) | até 250 artigos por minuto, mas só enquanto houver visitas ao site | de minutos a horas, conforme o tráfego | idem |
+| **Na mão, uma vez** | a revista inteira de uma vez | **segundos** | **12 s** na revista onde isto foi medido |
+
+Se preferir não esperar, monte de uma vez e deixe a tarefa só mantendo em dia:
+
+```bash
+php plugins/generic/recommendByAuthor/tools/buildRecommendations.php --pause=100
+```
+
+Dá para acompanhar o preenchimento em **Configurações → Website → Plugins → Artigos recomendados
+por Autor → Configurações**, que mostra quantas submissões já têm recomendações, ou pela linha de
+comando com `tools/buildRecommendations.php --status`.
+
+### Tabelas que ele cria
+
+Três, todas novas — **nenhuma tabela do OJS é alterada**:
+
+| tabela | o que guarda |
+|---|---|
+| `recommend_author_index` | uma linha por (identidade de autor, artigo publicado). A identidade é um nome normalizado ou um ORCID; é o que transforma "quais artigos este autor tem?" em consulta por índice |
+| `recommend_author_cache` | a lista ordenada de artigos recomendados para cada artigo |
+| `recommend_author_state` | o que já foi indexado e calculado, e quando |
+
+Numa revista com 4.823 artigos publicados e 25.877 autores, as três somam cerca de **17 MB**.
+Cada linha está presa à sua submissão com `ON DELETE CASCADE`, então excluir uma submissão limpa
+o que era dela, e desinstalar é apagar as três tabelas.
 
 ### Configuração
 
