@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-08-21 14:48+0000\n"
+"Last-Translator: Paul Heckler <paul.d.heckler@gmail.com>\n"
+"Language-Team: French <http://translate.pkp.sfu.ca/projects/ojs/generic-"
+"recommendByAuthor/fr/>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.generic.recommendByAuthor.displayName"
+msgstr "Articles recommandés par auteur et autrice"
+
+msgid "plugins.generic.recommendByAuthor.description"
+msgstr ""
+"Ce module insère une liste d'articles du même auteur ou de la même autrice "
+"sur la page de résumé de l'article."
+
+msgid "plugins.generic.recommendByAuthor.heading"
+msgstr "Articles les plus lus par le même auteur ou la même autrice"
+
+msgid "plugins.generic.recommendByAuthor.task.name"
+msgstr "Actualiser les recommandations par auteur-e"
+
+msgid "plugins.generic.recommendByAuthor.task.result"
+msgstr "{$refreshed} soumission(s) actualisée(s) ; {$queued} nouvelle(s) en file d'attente."
+
+msgid "plugins.generic.recommendByAuthor.settings.description"
+msgstr "Les recommandations sont calculées en arrière-plan et lues dans un cache, de sorte que la page de l'article ne les calcule jamais pendant que le lecteur attend."
+
+msgid "plugins.generic.recommendByAuthor.settings.status.title"
+msgstr "Couverture"
+
+msgid "plugins.generic.recommendByAuthor.settings.status.body"
+msgstr "{$computed} des {$total} soumissions enregistrées ont des recommandations ; {$pending} sont encore en file d'attente."
+
+msgid "plugins.generic.recommendByAuthor.settings.display.title"
+msgstr "Affichage"
+
+msgid "plugins.generic.recommendByAuthor.settings.recommendationCount"
+msgstr "Recommandations par page"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxRecommendations"
+msgstr "Nombre maximal de recommandations enregistrées par article"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy"
+msgstr "Trier les recommandations par"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.metric"
+msgstr "Les plus lus (consultations et téléchargements)"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.date"
+msgstr "Publiés le plus récemment"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid"
+msgstr "Identifier aussi les auteur-es par ORCID"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid.hint"
+msgstr "Les noms sont toujours comparés. L'ORCID ne fait qu'ajouter des articles que le nom seul ne trouverait pas, par exemple ceux d'un-e auteur-e qui a changé de nom de famille depuis."
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.title"
+msgstr "Actualisation"
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.hint"
+msgstr "Chaque exécution de la tâche planifiée actualise une partie de la revue, en commençant par les calculs les plus anciens, de sorte que les recommandations n'expirent jamais toutes en même temps."
+
+msgid "plugins.generic.recommendByAuthor.settings.batchSize"
+msgstr "Soumissions actualisées par exécution"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxAgeDays"
+msgstr "Actualiser les recommandations datant de plus de (jours)"
+
+msgid "plugins.generic.recommendByAuthor.settings.queueLimit"
+msgstr "Enregistrer au plus ce nombre de soumissions (0 = sans limite)"
+
+msgid "plugins.generic.recommendByAuthor.settings.rankingTtlHours"
+msgstr "Réutiliser les chiffres de lecture pendant (heures)"
+
+msgid "plugins.generic.recommendByAuthor.settings.htmlCacheHours"
+msgstr "Conserver la section générée pendant (heures)"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand"
+msgstr "Calculer les recommandations manquantes pendant que le lecteur attend"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand.hint"
+msgstr "Désactivé par défaut. Tant que l'option est désactivée, un article dont les recommandations n'ont pas encore été calculées n'affiche tout simplement pas la section, et la tâche planifiée la remplit. Il n'est conseillé de l'activer que sur de petites revues."
+
+msgid "plugins.generic.recommendByAuthor.settings.numberRequired"
+msgstr "Veuillez saisir un nombre entier."
+
+msgid "plugins.generic.recommendByAuthor.task.indexing"
+msgstr "{$indexed} soumission(s) indexée(s) ; il en reste {$remaining} à indexer avant de pouvoir calculer les recommandations."
+
+msgid "plugins.generic.recommendByAuthor.previous"
+msgstr "Précédent"
+
+msgid "plugins.generic.recommendByAuthor.next"
+msgstr "Suivant"
+
+msgid "plugins.generic.recommendByAuthor.showing"
+msgstr "Affichage de {$start}-{$end} sur {$total}"

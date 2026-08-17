@@ -4,7 +4,7 @@
 [![Version](https://img.shields.io/badge/version-2.0.0.1-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.1/recommendByAuthor-2.0.0.1.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.1/recommendByAuthor-2.0.0.1.tar.gz) · [OJS 3.3](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.1-ojs3.3/recommendByAuthor-2.0.0.1-ojs3.3.tar.gz) — or browse all [Releases](../../releases).
 
 The **"Most read articles by the same author(s)"** section on the article page — the same
 feature journals already know, rebuilt so that it is **read from a cache instead of computed
@@ -21,6 +21,30 @@ while a reader waits**.
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
 | OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 2.0.0.1 |
+| OJS 3.3.x   | [`stable-3_3_0`](../../tree/stable-3_3_0) | 2.0.0.1-ojs3.3 |
+
+### What differs in the 3.3 port
+
+The feature, the settings and the stored data are the same. Only the platform APIs differ,
+because OJS 3.3 predates them:
+
+| 3.5 | 3.3 branch |
+|-----|------------|
+| `DB` / `Cache` facades | `Capsule` and the OJS file cache — 3.3 never sets a Laravel facade root |
+| `Repo` collectors | DAOs |
+| `metrics_submission` | `metrics` — 3.4 is what split that table |
+| `HasTaskScheduler` | `scheduledTasks.xml` + `AcronPlugin::parseCronTab` |
+| PSR-4 namespaces | `import()` and `.inc.php`, plus the `index.php` 3.3 requires |
+| short locale codes (`pt`, `fr`) | long codes (`pt_PT`, `fr_FR`, `sr_RS@latin`) |
+| `frontend/components/pagination.tpl` | pagination written out in the template — 3.3 has no such include |
+
+Because 3.3 has no plugin namespaces, every class is prefixed with the plugin name. Both
+recommend plugins used to declare a `RecommendationStore` and a `RefreshRecommendations`;
+namespaces kept those apart in 3.5, and without them enabling both plugins at once was a
+fatal error.
+
+**Do not rename the plugin directory.** It must stay `recommendByAuthor` /
+`recommendBySimilarity`, which is what `import()` and `scheduledTasks.xml` resolve against.
 
 ## The problem
 
@@ -233,6 +257,29 @@ calculada enquanto o leitor espera**.
 | Versão do OJS | Branch | Versão do plugin |
 |---------------|--------|------------------|
 | OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 2.0.0.1 |
+| OJS 3.3.x     | [`stable-3_3_0`](../../tree/stable-3_3_0) | 2.0.0.1-ojs3.3 |
+
+### O que muda no port para o 3.3
+
+A funcionalidade, as configurações e os dados gravados são os mesmos. O que muda são as
+APIs da plataforma, que não existiam no OJS 3.3:
+
+| 3.5 | branch 3.3 |
+|-----|------------|
+| facades `DB` / `Cache` | `Capsule` e o cache de arquivo do OJS — o 3.3 nunca define o facade root |
+| coletores `Repo` | DAOs |
+| `metrics_submission` | `metrics` — quem separou essa tabela foi o 3.4 |
+| `HasTaskScheduler` | `scheduledTasks.xml` + `AcronPlugin::parseCronTab` |
+| namespaces PSR-4 | `import()` e `.inc.php`, mais o `index.php` que o 3.3 exige |
+| código de locale curto (`pt`, `fr`) | código longo (`pt_PT`, `fr_FR`, `sr_RS@latin`) |
+| `frontend/components/pagination.tpl` | paginação escrita no próprio template — o 3.3 não tem esse include |
+
+Como o 3.3 não tem namespace de plugin, toda classe leva o nome do plugin como prefixo. Os
+dois plugins recommend declaravam uma `RecommendationStore` e uma `RefreshRecommendations`;
+no 3.5 os namespaces separavam, e sem eles ligar os dois juntos dava erro fatal.
+
+**Não renomeie a pasta do plugin.** Ela tem de continuar `recommendByAuthor` /
+`recommendBySimilarity`, que é o que o `import()` e o `scheduledTasks.xml` resolvem.
 
 ### O que faz
 

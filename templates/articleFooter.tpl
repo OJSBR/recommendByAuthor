@@ -10,6 +10,11 @@
  *
  * The element ids are the ones the original plugin used, so themes that style
  * this section keep working.
+ *
+ * Ported from the 3.5 branch: 3.3 has no frontend/components/pagination.tpl,
+ * so the two links the plugin already computed are written out here; the
+ * issue comes from the plugin rather than from a collection; and {url} takes
+ * neither a router nor urlLocaleForPage in this release.
  *}
 {if $articlesBySameAuthor->submissions}
 	<section id="articlesBySameAuthorList">
@@ -19,31 +24,38 @@
 		<ul>
 			{foreach from=$articlesBySameAuthor->submissions item=submission}
 				{assign var=publication value=$submission->getCurrentPublication()}
-				{assign var=issue value=$articlesBySameAuthor->issues->get($publication->getData('issueId'))}
+				{assign var=issue value=$articlesBySameAuthor->plugin->getIssue((int) $publication->getData('issueId'))}
 				<li>
 					{foreach from=$publication->getData('authors') item=author}
 						{$author->getFullName()|escape},
 					{/foreach}
-					<a href="{url router=PKP\core\PKPApplication::ROUTE_PAGE journal=$currentContext->getPath() page="article" op="view" path=$submission->getBestId() urlLocaleForPage=""}">
-						{$publication->getLocalizedFullTitle(null, 'html')|strip_unsafe_html}
+					<a href="{url journal=$currentContext->getPath() page="article" op="view" path=$submission->getBestId()}">
+						{$publication->getLocalizedFullTitle()|strip_unsafe_html}
 					</a>
 					{if $issue},
-					<a href="{url router=PKP\core\PKPApplication::ROUTE_PAGE journal=$currentContext->getPath() page="issue" op="view" path=$issue->getBestIssueId() urlLocaleForPage=""}">
+					<a href="{url journal=$currentContext->getPath() page="issue" op="view" path=$issue->getBestIssueId()}">
 						{$currentContext->getLocalizedName()|escape}: {$issue->getIssueIdentification()|escape}
 					</a>
 					{/if}
 				</li>
 			{/foreach}
 		</ul>
-		<div id="articlesBySameAuthorPages">
-			{include
-				file="frontend/components/pagination.tpl"
-				prevUrl=$articlesBySameAuthor->previousUrl
-				nextUrl=$articlesBySameAuthor->nextUrl
-				showingStart=$articlesBySameAuthor->start
-				showingEnd=$articlesBySameAuthor->end
-				total=$articlesBySameAuthor->total
-			}
-		</div>
+		{if $articlesBySameAuthor->previousUrl || $articlesBySameAuthor->nextUrl}
+			<div id="articlesBySameAuthorPages">
+				{if $articlesBySameAuthor->previousUrl}
+					<a href="{$articlesBySameAuthor->previousUrl|escape}#articlesBySameAuthor" class="prev">
+						{translate key="plugins.generic.recommendByAuthor.previous"}
+					</a>
+				{/if}
+				<span class="current">
+					{translate key="plugins.generic.recommendByAuthor.showing" start=$articlesBySameAuthor->start end=$articlesBySameAuthor->end total=$articlesBySameAuthor->total}
+				</span>
+				{if $articlesBySameAuthor->nextUrl}
+					<a href="{$articlesBySameAuthor->nextUrl|escape}#articlesBySameAuthor" class="next">
+						{translate key="plugins.generic.recommendByAuthor.next"}
+					</a>
+				{/if}
+			</div>
+		{/if}
 	</section>
 {/if}

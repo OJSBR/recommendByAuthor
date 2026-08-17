@@ -9,13 +9,13 @@
   * Copyright (c) 2026 OJSBR (https://ojsbr.com)
   * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
   *
-  * Plugin version information.
+  * Plugin version information. Port of the 2.0.0.1 release to OJS 3.3.
   -->
 <version>
 	<application>recommendByAuthor</application>
 	<type>plugins.generic</type>
 	<release>2.0.0.1</release>
-	<date>2026-08-12</date>
+	<date>2026-08-17</date>
 	<lazy-load>1</lazy-load>
 	<sitewide>1</sitewide>
 	<class>RecommendByAuthorPlugin</class>

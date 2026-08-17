@@ -1,10 +1,13 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-06-04 19:54+0000\n"
-"Last-Translator: Diego José Macêdo <diegojmacedo@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <http://translate.pkp.sfu.ca/projects/ojs/"
-"generic-recommendByAuthor/pt_BR/>\n"
-"Language: pt_BR\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-19T11:05:21+00:00\n"
+"PO-Revision-Date: 2020-06-05 20:39+0000\n"
+"Last-Translator: Carla Marques <carla.marques@sdum.uminho.pt>\n"
+"Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
+"ojs/generic-recommendByAuthor/pt_PT/>\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,11 +19,11 @@ msgstr "Artigos recomendados por Autor"
 
 msgid "plugins.generic.recommendByAuthor.description"
 msgstr ""
-"Este plugin insere uma lista de artigos pelo mesmo autor na página do resumo "
+"Este plugin insere uma lista de artigos do mesmo autor na página do resumo "
 "do artigo."
 
 msgid "plugins.generic.recommendByAuthor.heading"
-msgstr "Artigos mais lidos pelo mesmo(s) autor(es)"
+msgstr "Artigos mais lidos do(s) mesmo(s) autor(es)"
 
 msgid "plugins.generic.recommendByAuthor.task.name"
 msgstr "Atualizar recomendações por autor"
@@ -29,16 +32,16 @@ msgid "plugins.generic.recommendByAuthor.task.result"
 msgstr "{$refreshed} submissão(ões) atualizada(s); {$queued} nova(s) na fila."
 
 msgid "plugins.generic.recommendByAuthor.settings.description"
-msgstr "As recomendações são calculadas em segundo plano e lidas de um cache, de modo que a página do artigo nunca as calcula enquanto o leitor espera."
+msgstr "As recomendações são calculadas em segundo plano e lidas de uma cache, de modo que a página do artigo nunca as calcula enquanto o leitor espera."
 
 msgid "plugins.generic.recommendByAuthor.settings.status.title"
 msgstr "Cobertura"
 
 msgid "plugins.generic.recommendByAuthor.settings.status.body"
-msgstr "{$computed} de {$total} submissões inscritas têm recomendações; {$pending} ainda na fila."
+msgstr "{$computed} de {$total} submissões inscritas têm recomendações; {$pending} ainda em fila."
 
 msgid "plugins.generic.recommendByAuthor.settings.display.title"
-msgstr "Exibição"
+msgstr "Apresentação"
 
 msgid "plugins.generic.recommendByAuthor.settings.recommendationCount"
 msgstr "Recomendações por página"
@@ -80,13 +83,13 @@ msgid "plugins.generic.recommendByAuthor.settings.rankingTtlHours"
 msgstr "Reaproveitar os números de leitura por (horas)"
 
 msgid "plugins.generic.recommendByAuthor.settings.htmlCacheHours"
-msgstr "Manter a seção renderizada por (horas)"
+msgstr "Manter a secção renderizada por (horas)"
 
 msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand"
 msgstr "Calcular recomendações ausentes enquanto o leitor espera"
 
 msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand.hint"
-msgstr "Desligado por padrão. Enquanto estiver desligado, um artigo cujas recomendações ainda não foram calculadas simplesmente não exibe a seção, e a tarefa agendada a preenche. Só vale ligar em revistas pequenas."
+msgstr "Desligado por omissão. Enquanto estiver desligado, um artigo cujas recomendações ainda não foram calculadas simplesmente não apresenta a secção, e a tarefa agendada preenche-a. Só vale a pena ligar em revistas pequenas."
 
 msgid "plugins.generic.recommendByAuthor.settings.numberRequired"
 msgstr "Informe um número inteiro."
@@ -98,7 +101,7 @@ msgid "plugins.generic.recommendByAuthor.previous"
 msgstr "Anterior"
 
 msgid "plugins.generic.recommendByAuthor.next"
-msgstr "Próximo"
+msgstr "Seguinte"
 
 msgid "plugins.generic.recommendByAuthor.showing"
-msgstr "Mostrando {$start}-{$end} de {$total}"
+msgstr "A mostrar {$start}-{$end} de {$total}"

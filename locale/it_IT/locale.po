@@ -1,0 +1,108 @@
+# Leonardo Mancini <leonardo.mancini@unito.it>, 2024.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-19T11:05:21+00:00\n"
+"PO-Revision-Date: 2024-03-15 19:06+0000\n"
+"Last-Translator: Leonardo Mancini <leonardo.mancini@unito.it>\n"
+"Language-Team: Italian <http://translate.pkp.sfu.ca/projects/ojs/"
+"generic-recommendByAuthor/it/>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18.2\n"
+
+msgid "plugins.generic.recommendByAuthor.displayName"
+msgstr "Altri articoli dello/a stesso/a autore/rice"
+
+msgid "plugins.generic.recommendByAuthor.description"
+msgstr ""
+"Questo plugin inserisce una lista di articoli dello/a stesso/a autore/rice "
+"nella pagina di abstract dell'articolo."
+
+msgid "plugins.generic.recommendByAuthor.heading"
+msgstr "Altri articoli dello/a stesso/a autore/rice"
+
+msgid "plugins.generic.recommendByAuthor.task.name"
+msgstr "Aggiorna le raccomandazioni per autore"
+
+msgid "plugins.generic.recommendByAuthor.task.result"
+msgstr "{$refreshed} proposta/e aggiornata/e; {$queued} nuova/e in coda."
+
+msgid "plugins.generic.recommendByAuthor.settings.description"
+msgstr "Le raccomandazioni sono calcolate in background e lette da una cache, così la pagina dell'articolo non le calcola mai mentre il lettore aspetta."
+
+msgid "plugins.generic.recommendByAuthor.settings.status.title"
+msgstr "Copertura"
+
+msgid "plugins.generic.recommendByAuthor.settings.status.body"
+msgstr "{$computed} di {$total} proposte registrate hanno raccomandazioni; {$pending} sono ancora in coda."
+
+msgid "plugins.generic.recommendByAuthor.settings.display.title"
+msgstr "Visualizzazione"
+
+msgid "plugins.generic.recommendByAuthor.settings.recommendationCount"
+msgstr "Raccomandazioni per pagina"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxRecommendations"
+msgstr "Numero massimo di raccomandazioni memorizzate per articolo"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy"
+msgstr "Ordina le raccomandazioni per"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.metric"
+msgstr "Più letti (visualizzazioni e download)"
+
+msgid "plugins.generic.recommendByAuthor.settings.orderBy.date"
+msgstr "Pubblicati più di recente"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid"
+msgstr "Identifica gli autori anche tramite ORCID"
+
+msgid "plugins.generic.recommendByAuthor.settings.matchByOrcid.hint"
+msgstr "I nomi sono sempre confrontati. L'ORCID aggiunge soltanto articoli che il nome da solo non troverebbe, come quelli di un autore che nel frattempo ha cambiato cognome."
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.title"
+msgstr "Aggiornamento"
+
+msgid "plugins.generic.recommendByAuthor.settings.refresh.hint"
+msgstr "Ogni esecuzione dell'attività pianificata aggiorna una parte della rivista, a partire da quelle calcolate da più tempo, così le raccomandazioni non scadono mai tutte insieme."
+
+msgid "plugins.generic.recommendByAuthor.settings.batchSize"
+msgstr "Proposte aggiornate per esecuzione"
+
+msgid "plugins.generic.recommendByAuthor.settings.maxAgeDays"
+msgstr "Aggiorna le raccomandazioni più vecchie di (giorni)"
+
+msgid "plugins.generic.recommendByAuthor.settings.queueLimit"
+msgstr "Registra al massimo questo numero di proposte (0 = nessun limite)"
+
+msgid "plugins.generic.recommendByAuthor.settings.rankingTtlHours"
+msgstr "Riutilizza i dati di lettura per (ore)"
+
+msgid "plugins.generic.recommendByAuthor.settings.htmlCacheHours"
+msgstr "Conserva la sezione generata per (ore)"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand"
+msgstr "Calcola le raccomandazioni mancanti mentre il lettore aspetta"
+
+msgid "plugins.generic.recommendByAuthor.settings.computeOnDemand.hint"
+msgstr "Disattivato per impostazione predefinita. Finché è disattivato, un articolo le cui raccomandazioni non sono ancora state calcolate semplicemente non mostra la sezione, e l'attività pianificata la riempie. Conviene attivarlo solo su riviste piccole."
+
+msgid "plugins.generic.recommendByAuthor.settings.numberRequired"
+msgstr "Inserisci un numero intero."
+
+msgid "plugins.generic.recommendByAuthor.task.indexing"
+msgstr "{$indexed} proposta/e indicizzata/e; ne restano {$remaining} da indicizzare prima di poter calcolare le raccomandazioni."
+
+msgid "plugins.generic.recommendByAuthor.previous"
+msgstr "Precedente"
+
+msgid "plugins.generic.recommendByAuthor.next"
+msgstr "Successivo"
+
+msgid "plugins.generic.recommendByAuthor.showing"
+msgstr "Risultati {$start}-{$end} di {$total}"

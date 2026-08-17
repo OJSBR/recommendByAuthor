@@ -97,3 +97,12 @@ msgstr "Please enter a whole number."
 
 msgid "plugins.generic.recommendByAuthor.task.indexing"
 msgstr "Indexed {$indexed} submission(s); {$remaining} still to index before recommendations can be computed."
+
+msgid "plugins.generic.recommendByAuthor.previous"
+msgstr "Previous"
+
+msgid "plugins.generic.recommendByAuthor.next"
+msgstr "Next"
+
+msgid "plugins.generic.recommendByAuthor.showing"
+msgstr "Showing {$start}-{$end} of {$total}"
