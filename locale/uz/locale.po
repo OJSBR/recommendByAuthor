@@ -3,6 +3,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: uz\n"
 "X-Generator: Weblate\n"
 
 msgid "plugins.generic.recommendByAuthor.displayName"
@@ -85,3 +86,15 @@ msgstr "Please enter a whole number."
 
 msgid "plugins.generic.recommendByAuthor.task.indexing"
 msgstr "Indexed {$indexed} submission(s); {$remaining} still to index before recommendations can be computed."
+
+#, fuzzy
+msgid "plugins.generic.recommendByAuthor.displayName"
+msgstr "Muallifning boshqa maqolalarini tavsiya qilish"
+
+#, fuzzy
+msgid "plugins.generic.recommendByAuthor.description"
+msgstr "Bu plagin maqola annotatsiyasi sahifasiga oʻsha muallifning maqolalari roʻyxatini qoʻshadi."
+
+#, fuzzy
+msgid "plugins.generic.recommendByAuthor.heading"
+msgstr "Oʻsha mualliflarning eng koʻp oʻqilgan maqolalari"

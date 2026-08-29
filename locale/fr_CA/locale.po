@@ -15,13 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.9.1\n"
 
+
 msgid "plugins.generic.recommendByAuthor.displayName"
 msgstr "Articles recommandés par l'auteur-e"
 
 msgid "plugins.generic.recommendByAuthor.description"
-msgstr ""
-"Ce plugiciel insère une liste d'articles du,de la même auteur-e sur la page "
-"du résumé de l'article."
+msgstr "Ce plugiciel insère une liste d'articles du,de la même auteur-e sur la page du résumé de l'article."
 
 msgid "plugins.generic.recommendByAuthor.heading"
 msgstr "Articles les plus lus du,de la,des même-s auteur-e-s"

@@ -78,3 +78,15 @@ msgstr "Please enter a whole number."
 
 msgid "plugins.generic.recommendByAuthor.task.indexing"
 msgstr "Indexed {$indexed} submission(s); {$remaining} still to index before recommendations can be computed."
+
+#, fuzzy
+msgid "plugins.generic.recommendByAuthor.displayName"
+msgstr "Nastawki togo samego awtora doporucyś"
+
+#, fuzzy
+msgid "plugins.generic.recommendByAuthor.description"
+msgstr "Toś ten tykac zasajźijo lisćinu nastawkow togo samego awtora na bok z abstraktom nastawka."
+
+#, fuzzy
+msgid "plugins.generic.recommendByAuthor.heading"
+msgstr "Nejcytanjejše nastawki tych samych awtorow"

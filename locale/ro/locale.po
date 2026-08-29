@@ -12,13 +12,12 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 3.9.1\n"
 
+
 msgid "plugins.generic.recommendByAuthor.displayName"
 msgstr "Articole recomandate după autor"
 
 msgid "plugins.generic.recommendByAuthor.description"
-msgstr ""
-"Acest plugin introduce o listă de articole ale aceluiași autor pe pagina cu "
-"rezumatul articolului."
+msgstr "Acest plugin introduce o listă de articole ale aceluiași autor pe pagina cu rezumatul articolului."
 
 msgid "plugins.generic.recommendByAuthor.heading"
 msgstr "Cele mai citite articole ale aceluiași autor(i)"

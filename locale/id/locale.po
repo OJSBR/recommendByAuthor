@@ -4,20 +4,19 @@ msgstr ""
 "Last-Translator: Ramli Baharuddin <ramli.baharuddin@relawanjurnal.id>\n"
 "Language-Team: Indonesian <http://translate.pkp.sfu.ca/projects/ojs/generic-"
 "recommendByAuthor/id/>\n"
-"Language: id_ID\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.9.1\n"
 
+
 msgid "plugins.generic.recommendByAuthor.displayName"
 msgstr "Rekomendasi Artikel berdasarkan Penulis"
 
 msgid "plugins.generic.recommendByAuthor.description"
-msgstr ""
-"Plugin ini memuat daftar artikel berdasarkan penulis yang sama pada halaman "
-"abstrak artikel."
+msgstr "Plugin ini memuat daftar artikel berdasarkan penulis yang sama pada halaman abstrak artikel."
 
 msgid "plugins.generic.recommendByAuthor.heading"
 msgstr "Artikel paling banyak dibaca berdasarkan penulis yang sama"
