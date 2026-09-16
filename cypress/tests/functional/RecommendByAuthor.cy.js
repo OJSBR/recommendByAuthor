@@ -122,12 +122,20 @@ describe('Recommend Articles by Author plugin', function() {
 	};
 
 	const openPluginSettings = () => {
-		// The row expands with an animation; the settings link does not exist
-		// until it has finished.
-		cy.get('tr[id*="recommendbyauthorplugin"] a.show_extras', {timeout: 30000}).click();
-		cy.get(settingsLink, {timeout: 30000}).should('be.visible').click();
+		// The extras row may already be open (the grid keeps it between actions):
+		// expanding it again would close it and take the settings link away.
+		cy.get('tr[id*="recommendbyauthorplugin"]', {timeout: 30000}).then(($row) => {
+			if (!$row.find(settingsLink.replace('a[id*="', '[id*="') + ':visible').length) {
+				cy.get('tr[id*="recommendbyauthorplugin"] a.show_extras').first().click();
+			}
+		});
+		// The row expands with an animation: the link is clicked once it exists.
+		cy.get(settingsLink, {timeout: 30000}).first().click({force: true});
 		waitJQuery();
 		cy.get(settingsForm, {timeout: 30000}).should('exist');
+		cy.window({timeout: 30000}).should((win) => {
+			expect(win.jQuery(settingsForm).data('pkp.handler'), 'form handler').to.exist;
+		});
 	};
 
 	const setEnabled = (wanted) => {
