@@ -1,10 +1,10 @@
 # Recommend Articles by Author — OJS plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-2.0.0.2-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-2.0.0.3-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.2/recommendByAuthor-2.0.0.2.tar.gz) · [OJS 3.3](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.1-ojs3.3/recommendByAuthor-2.0.0.1-ojs3.3.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.3/recommendByAuthor-2.0.0.3.tar.gz) · [OJS 3.3](https://github.com/OJSBR/recommendByAuthor/releases/download/2.0.0.1-ojs3.3/recommendByAuthor-2.0.0.1-ojs3.3.tar.gz) — or browse all [Releases](../../releases).
 
 The **"Most read articles by the same author(s)"** section on the article page — the same
 feature journals already know, rebuilt so that it is **read from a cache instead of computed
@@ -20,7 +20,7 @@ while a reader waits**.
 
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 2.0.0.2 |
+| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 2.0.0.3 |
 | OJS 3.3.x   | [`stable-3_3_0`](../../tree/stable-3_3_0) | 2.0.0.1-ojs3.3 |
 
 ## The problem
@@ -174,25 +174,25 @@ No OJS table is modified. Uninstalling is `DROP`.
 
 ## Tests
 
-Three suites, all of them run against OJS 3.5.0.3 before this release
-(details and the list of cases in [tests/CASES.md](tests/CASES.md)):
+Two suites, both on PKP's own `PKPTestCase` and PHPUnit, run against OJS 3.5.0.3 before this
+release:
 
 | Suite | What it covers | Result |
 |---|---|---|
-| [`tests/regression.php`](tests/regression.php) | author keys, the index, the store, and publishing through to the reader — against a real database | **62 cases, 62 passed** |
-| [`tests/AuthorKeyTest.php`](tests/AuthorKeyTest.php) | the identity rules on their own (PHPUnit, no database) | **passed** |
+| [`tests/AuthorKeyTest.php`](tests/AuthorKeyTest.php) | the identity rules on their own, with no database | **passed** |
+| [`tests/RecommendByAuthorTest.php`](tests/RecommendByAuthorTest.php) | the index, the store and publishing through to the reader, against a real database | **passed** |
 | [`cypress/tests/functional/`](cypress/tests/functional) | enabling, the settings screen and the article page, in a browser | **7 tests, 7 passed** |
 
 ```bash
-php plugins/generic/recommendByAuthor/tests/regression.php
-cd lib/pkp/tests && ../lib/vendor/bin/phpunit -c phpunit.xml --testsuite ApplicationPlugins
-npx cypress run --spec 'cypress/tests/**/RecommendByAuthor.cy.js'
+php lib/pkp/lib/vendor/bin/phpunit --configuration lib/pkp/tests/phpunit.xml plugins/generic/recommendByAuthor/tests
+npx cypress run --spec 'plugins/generic/recommendByAuthor/cypress/tests/**/RecommendByAuthor.cy.js'
 ```
 
-The regression suite creates its own submissions and deletes them again; run it on a test
-installation. The Cypress spec defaults to the PKP test data but runs against any journal
-through `cypress.env.json` — it solves the Altcha proof of work where `captcha_on_login` is on,
-and works whatever language the interface is in.
+The database suite creates its own submissions and deletes them again, and skips itself where the
+installation looks like a live journal. The Cypress spec defaults to the PKP test data but runs
+against any journal, finds a published article of its own and works whatever language the
+interface is in; where `captcha_on_login` is on, turn it off for the run — no captcha is ever
+solved by the spec.
 
 Beyond the suites, the correctness of the results was checked against the original plugin on a
 production journal: **60 submissions compared item by item**, where the new results are a
@@ -233,7 +233,7 @@ calculada enquanto o leitor espera**.
 
 | Versão do OJS | Branch | Versão do plugin |
 |---------------|--------|------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 2.0.0.2 |
+| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 2.0.0.3 |
 | OJS 3.3.x     | [`stable-3_3_0`](../../tree/stable-3_3_0) | 2.0.0.1-ojs3.3 |
 
 ### O que faz
@@ -343,17 +343,17 @@ Nenhuma tabela do OJS é alterada. Desinstalar é `DROP`.
 
 ### Testes
 
-Três suítes, todas executadas contra o OJS 3.5.0.3 antes desta versão (a lista de casos está em
-[tests/CASES.md](tests/CASES.md)): a de regressão (`tests/regression.php`), que cobre as chaves
-de autor, o índice, o armazenamento e o caminho da publicação até o leitor contra um banco real
-— **62 casos, 62 passaram**; a unitária em PHPUnit (`tests/AuthorKeyTest.php`), que cobre as
-regras de identidade sozinhas — **passou**; e a funcional em Cypress, que cobre habilitar o
+Duas suítes em PHPUnit, sobre o `PKPTestCase` do próprio PKP, executadas contra o OJS 3.5.0.3
+antes desta versão: `tests/AuthorKeyTest.php`, que cobre as regras de identidade sozinhas, sem
+banco; e `tests/RecommendByAuthorTest.php`, que cobre o índice, o armazenamento e o caminho da
+publicação até o leitor contra um banco real. Mais a funcional em Cypress, que cobre habilitar o
 plugin, a tela de configurações e a página do artigo no navegador — **7 testes, 7 passaram**.
 
-A suíte de regressão cria e apaga as próprias submissões: rode em instalação de teste. O Cypress
-usa por padrão a base de testes da PKP, mas roda contra qualquer revista via `cypress.env.json`
-— ele resolve o desafio do Altcha onde `captcha_on_login` está ligado e funciona em qualquer
-idioma de interface.
+A suíte de banco cria e apaga as próprias submissões e se pula sozinha onde a instalação parece
+uma revista de verdade. O Cypress usa por padrão a base de testes da PKP, mas roda contra
+qualquer revista, descobre sozinho um artigo publicado e funciona em qualquer idioma de
+interface; onde `captcha_on_login` estiver ligado, desligue para a rodada — o spec nunca resolve
+captcha.
 
 Além das suítes, a correção dos resultados foi conferida contra o plugin original numa revista
 de produção: **60 artigos comparados item a item**, com o resultado novo sendo superconjunto, sem

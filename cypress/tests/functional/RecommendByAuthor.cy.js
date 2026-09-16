@@ -23,7 +23,8 @@ describe('Recommend Articles by Author plugin', function() {
 	const contextPath = Cypress.env('contextPath') || 'publicknowledge';
 	const adminUser = Cypress.env('adminUser') || 'admin';
 	const adminPassword = Cypress.env('adminPassword') || 'admin';
-	const articleId = Cypress.env('articleId') || 1;
+	// A published article of this journal, discovered once when none is given.
+	let articleId = Cypress.env('articleId') || null;
 
 	// A cache buster on every visit: a site behind an edge cache would otherwise
 	// serve the article page as it was before the plugin was switched on or off,
@@ -56,72 +57,68 @@ describe('Recommend Articles by Author plugin', function() {
 	// code being tested. Anything thrown from this plugin still fails the run.
 	Cypress.on('uncaught:exception', (err) => !err.message.includes('is not valid JSON'));
 
-	// A site with the Altcha captcha turned on for login (captcha_on_login)
-	// expects a solved proof of work along with the form. The PKP test data has
-	// it off, so this is a no-op there; solving it here is what lets the very
-	// same spec run against a real installation, which is where the plugin has
-	// to work anyway.
-	const solveAltcha = (win, challenge) => {
-		const encoder = new win.TextEncoder();
-		const digest = async (number) => {
-			const buffer = await win.crypto.subtle.digest(
-				challenge.algorithm,
-				encoder.encode(challenge.salt + number)
-			);
-			return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, '0')).join('');
-		};
-		return (async () => {
-			for (let number = 0; number <= (challenge.maxnumber || 100000); number++) {
-				if (await digest(number) === challenge.challenge) {
-					return number;
-				}
-			}
-			throw new Error('the Altcha challenge could not be solved');
-		})();
-	};
+	// ---- OJSBR spec helpers (padrão v2): work on OJS/OMP 3.3, 3.4 and 3.5 and in PKP's CI ----
 
-	const login = () => {
-		cy.visit('/index.php/' + contextPath + '/en/login');
-		cy.get('input[id=username]').clear().type(adminUser, {delay: 0});
-		cy.get('input[id=password]').clear().type(adminPassword, {delay: 0});
+	const pageUrl = (path) => '/index.php/' + contextPath + (path ? '/' + path : '');
 
-		cy.window().then(win => {
-			const widget = win.document.querySelector('altcha-widget');
-			if (!widget) {
-				return;
-			}
-			const challenge = JSON.parse(widget.getAttribute('challengejson'));
-			return solveAltcha(win, challenge).then(number => {
-				const input = win.document.createElement('input');
-				input.type = 'hidden';
-				input.name = 'altcha';
-				input.value = win.btoa(JSON.stringify({
-					algorithm: challenge.algorithm,
-					challenge: challenge.challenge,
-					number: number,
-					salt: challenge.salt,
-					signature: challenge.signature,
-					took: 1,
-				}));
-				win.document.querySelector('form[id=login]').appendChild(input);
-				// The floating widget hooks the submit event and would replace
-				// what was just put there.
-				widget.remove();
-			});
+	// Same as PKP's cy.waitJQuery(), which the support files of OJS 3.3 test sites may lack.
+	// jQuery may not be on the page yet when this runs, so the check retries on the window
+	// itself instead of on a property that would resolve as undefined.
+	const waitJQuery = () => cy.window({timeout: 60000}).should((win) => {
+		expect(win.jQuery && win.jQuery.active, 'pending jQuery requests').to.eq(0);
+	});
+
+	// Requests carry the browser's User-Agent: OJS 3.3 drops a session whose agent changes.
+	const request = (options) => cy.window({log: false}).then((win) => cy.request(Object.assign(
+		typeof options === 'string' ? {url: options} : options,
+		{headers: Object.assign({'User-Agent': win.navigator.userAgent}, (typeof options === 'string' ? {} : options.headers) || {})}
+	)));
+
+	// Signs in through requests (the login page can re-render while it is typed into), then
+	// falls back to the form when the session did not stick (OJS 3.3 cookie handling).
+	// A captcha on the login form is never solved here: where captcha_on_login is on, turn it
+	// off for the run, as the house runner does.
+	const login = (username, password) => {
+		cy.clearCookies();
+		request(pageUrl('login')).then((response) => {
+			const token = /name="csrfToken" value="([^"]+)"/.exec(response.body)[1];
+			// The form posts to the URL with the language: a redirect would turn the POST into a GET.
+			const action = /<form[^>]*id="login"[^>]*action="([^"]+)"/.exec(response.body)[1];
+			request({method: 'POST', url: action, form: true, body: {csrfToken: token, username: username, password: password}, log: false});
 		});
-
-		cy.get('form[id=login] button').click();
-		// The form posts to /login/signIn, so the path alone does not say whether
-		// the credentials were accepted; the login form being gone does.
-		cy.get('form[id=login]', {timeout: 30000}).should('not.exist');
+		cy.visit(pageUrl('submissions') + '?reload=' + Date.now());
+		cy.get('body').then(($body) => {
+			if ($body.find('form#login').length) {
+				cy.get('form#login input[name="username"]').type(username, {delay: 0});
+				cy.get('form#login input[name="password"]').type(password, {delay: 0, log: false});
+				cy.get('form#login').submit();
+				cy.get('form#login', {timeout: 30000}).should('not.exist');
+			}
+		});
 	};
+
+	// The article the reader's checks are made on: the first published one of the
+	// journal, so the spec does not depend on the ids of any particular data set.
+	const withArticle = (callback) => {
+		if (articleId) {
+			return cy.wrap(articleId, {log: false}).then(callback);
+		}
+		request(pageUrl('api/v1/submissions?status=3&count=1')).then((response) => {
+			const body = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
+			expect(body.items, 'a published article').to.have.length.at.least(1);
+			articleId = body.items[0].id;
+			callback(articleId);
+		});
+	};
+
+	// ---- end of helpers ----
 
 	const goToPlugins = () => {
 		cy.visit(pluginsUrl);
 		// The settings page is a Vue app; on a loaded server it can take a while
 		// to mount, and the tab button does not exist until it has.
 		cy.get('button[id="plugins-button"]', {timeout: 60000}).click();
-		cy.waitJQuery();
+		waitJQuery();
 	};
 
 	const openPluginSettings = () => {
@@ -129,7 +126,7 @@ describe('Recommend Articles by Author plugin', function() {
 		// until it has finished.
 		cy.get('tr[id*="recommendbyauthorplugin"] a.show_extras', {timeout: 30000}).click();
 		cy.get(settingsLink, {timeout: 30000}).should('be.visible').click();
-		cy.waitJQuery();
+		waitJQuery();
 		cy.get(settingsForm, {timeout: 30000}).should('exist');
 	};
 
@@ -149,7 +146,7 @@ describe('Recommend Articles by Author plugin', function() {
 				cy.get('[role="dialog"] button, .pkp_modal button, .modal button', {timeout: 30000})
 					.first().click({force: true});
 			}
-			cy.waitJQuery();
+			waitJQuery();
 		});
 		// The checkbox is saved over AJAX; without waiting for the grid to come
 		// back in the wanted state, the next step can read the article page
@@ -157,8 +154,13 @@ describe('Recommend Articles by Author plugin', function() {
 		cy.get(enableCheckbox, {timeout: 30000}).should(wanted ? 'be.checked' : 'not.be.checked');
 	};
 
+	before(function() {
+		login(adminUser, adminPassword);
+		withArticle(() => {});
+	});
+
 	it('Enables the plugin, which creates its tables', function() {
-		login();
+		login(adminUser, adminPassword);
 		goToPlugins();
 		setEnabled(true);
 
@@ -170,7 +172,7 @@ describe('Recommend Articles by Author plugin', function() {
 	});
 
 	it('Ships with defaults that cannot slow a journal down', function() {
-		login();
+		login(adminUser, adminPassword);
 		goToPlugins();
 		openPluginSettings();
 
@@ -186,13 +188,13 @@ describe('Recommend Articles by Author plugin', function() {
 	});
 
 	it('Persists a changed setting', function() {
-		login();
+		login(adminUser, adminPassword);
 		goToPlugins();
 		openPluginSettings();
 
 		cy.get(settingsForm + ' input[name="recommendationCount"]').clear().type('4');
 		cy.get(settingsForm + ' button[id^="submitFormButton-"]').click({force: true});
-		cy.waitJQuery();
+		waitJQuery();
 
 		goToPlugins();
 		openPluginSettings();
@@ -201,17 +203,17 @@ describe('Recommend Articles by Author plugin', function() {
 		// Put it back.
 		cy.get(settingsForm + ' input[name="recommendationCount"]').clear().type('10');
 		cy.get(settingsForm + ' button[id^="submitFormButton-"]').click({force: true});
-		cy.waitJQuery();
+		waitJQuery();
 	});
 
 	it('Refuses a setting that is not a whole number', function() {
-		login();
+		login(adminUser, adminPassword);
 		goToPlugins();
 		openPluginSettings();
 
 		cy.get(settingsForm + ' input[name="recommendationCount"]').clear().type('not a number');
 		cy.get(settingsForm + ' button[id^="submitFormButton-"]').click({force: true});
-		cy.waitJQuery();
+		waitJQuery();
 
 		// What matters is not which markup the error uses, but that nothing
 		// was stored: a journal must not end up with zero recommendations per
@@ -257,7 +259,7 @@ describe('Recommend Articles by Author plugin', function() {
 	});
 
 	it('Disables cleanly, leaving the article page untouched', function() {
-		login();
+		login(adminUser, adminPassword);
 		goToPlugins();
 		setEnabled(false);
 
@@ -266,7 +268,7 @@ describe('Recommend Articles by Author plugin', function() {
 		cy.get(section).should('not.exist');
 
 		// Leave the journal as the run found it.
-		login();
+		login(adminUser, adminPassword);
 		goToPlugins();
 		setEnabled(true);
 	});
