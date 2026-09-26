@@ -191,9 +191,8 @@ class RecommendByAuthorPlugin extends GenericPlugin implements HasTaskScheduler
         // A row with no journal means the plugin was enabled for the whole
         // site, which stands for every journal rather than for journal zero.
         if ($enabled->contains(null)) {
-            return Application::getContextDAO()->getAll(true)
-                ->map(fn ($context) => (int) $context->getId())
-                ->toArray();
+            // getAll() hands back a DAOResultFactory, which has toArray() but no map().
+            return array_map(fn ($context) => (int) $context->getId(), Application::getContextDAO()->getAll(true)->toArray());
         }
 
         return $enabled->map(fn ($id) => (int) $id)->all();

@@ -432,4 +432,47 @@ class RecommendByAuthorTest extends PKPTestCase
         // The journals it works on come from the settings, never from the request.
         $this->assertIsArray($plugin->enabledContextIds());
     }
+
+    public function testEnablingItForTheWholeSiteMeansEveryJournal(): void
+    {
+        PluginRegistry::loadCategory('generic', false, self::CONTEXT_ID);
+        $plugin = PluginRegistry::getPlugin('generic', 'recommendbyauthorplugin');
+        $this->assertNotNull($plugin, 'the plugin is not installed here');
+
+        // A row with no journal is what the site-wide switch leaves behind, and
+        // an installation upgraded from 3.4 often carries one. Reading it used to
+        // call map() on a DAOResultFactory and take the whole scheduler down.
+        $settings = DB::table('plugin_settings')
+            ->where('plugin_name', $plugin->getName())
+            ->where('setting_name', 'enabled');
+        $previous = $settings->whereNull('context_id')->first();
+        if (!$previous) {
+            DB::table('plugin_settings')->insert([
+                'plugin_name' => $plugin->getName(),
+                'context_id' => null,
+                'setting_name' => 'enabled',
+                'setting_value' => '1',
+                'setting_type' => 'bool',
+            ]);
+        }
+
+        try {
+            $ids = $plugin->enabledContextIds();
+            $journals = array_map(
+                fn ($context) => (int) $context->getId(),
+                Application::getContextDAO()->getAll(true)->toArray()
+            );
+            sort($ids);
+            sort($journals);
+            $this->assertSame($journals, $ids, 'enabled for the site has to stand for every journal');
+        } finally {
+            if (!$previous) {
+                DB::table('plugin_settings')
+                    ->where('plugin_name', $plugin->getName())
+                    ->where('setting_name', 'enabled')
+                    ->whereNull('context_id')
+                    ->delete();
+            }
+        }
+    }
 }
