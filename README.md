@@ -23,6 +23,10 @@ while a reader waits**.
 | OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 2.0.0.4 |
 | OJS 3.3.x   | [`stable-3_3_0`](../../tree/stable-3_3_0) | 2.0.0.1-ojs3.3 |
 
+The 3.3 branch needs **PHP 7.4 or later** (7.4 to 8.2 are checked on every push). OJS 3.3
+itself also runs on PHP 7.3, where this plugin does not load. The published 2.0.0.1-ojs3.3 still needs
+PHP 8.0; the fix for PHP 7.4 comes with the next release of this branch.
+
 ### What differs in the 3.3 port
 
 The feature, the settings and the stored data are the same. Only the platform APIs differ,
@@ -258,6 +262,10 @@ calculada enquanto o leitor espera**.
 |---------------|--------|------------------|
 | OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 2.0.0.4 |
 | OJS 3.3.x     | [`stable-3_3_0`](../../tree/stable-3_3_0) | 2.0.0.1-ojs3.3 |
+
+A branch 3.3 exige **PHP 7.4 ou superior** (do 7.4 ao 8.2, conferidos a cada push). O próprio
+OJS 3.3 também roda em PHP 7.3, onde este plugin não carrega. A versão 2.0.0.1-ojs3.3 publicada ainda
+exige PHP 8.0; a correção para o PHP 7.4 vem na próxima versão desta branch.
 
 ### O que muda no port para o 3.3
 
