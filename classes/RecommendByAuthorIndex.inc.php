@@ -34,8 +34,13 @@ class RecommendByAuthorIndex
     /** Author settings that can identify an author across submissions. */
     private const SETTINGS = ['givenName', 'familyName', 'orcid'];
 
-    public function __construct(private bool $matchByOrcid = true)
+    /** Whether the same ORCID iD alone makes two authors the same person. */
+    private $matchByOrcid;
+
+    // No constructor property promotion: it needs PHP 8, and OJS 3.3 also runs on PHP 7.4.
+    public function __construct(bool $matchByOrcid = true)
     {
+        $this->matchByOrcid = $matchByOrcid;
     }
 
     /**
